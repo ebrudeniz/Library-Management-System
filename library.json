@@ -1,0 +1,17 @@
+[
+    {
+        "title": "Don Quixote",
+        "author": "Miguel De Cervantes",
+        "isbn": "123456"
+    },
+    {
+        "title": "Crime and Punishment",
+        "author": "Fyodor Dostoyevsky",
+        "isbn": "123457"
+    },
+    {
+        "title": "Anna Karenina",
+        "author": "Leo Tolstoy",
+        "isbn": "123458"
+    }
+]

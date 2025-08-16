@@ -33,6 +33,39 @@ class Library:
             return True
         return False
 
+    def add_book_by_isbn(self, isbn):
+        try:
+            url = f"https://openlibrary.org/isbn/{isbn}.json"
+            response = httpx.get(url, follow_redirects=True)
+            response.raise_for_status()
+            book_data = response.json()
+
+            title = book_data.get("title", "Not Known")
+
+            authors_list = []
+
+            for author in book_data.get("authors", []):
+                author_url = f"https://openlibrary.org{author['key']}.json"
+                ar = httpx.get(author_url, timeout=5.0)
+                ar.raise_for_status()
+                author_name = ar.json().get("name", "Not Known")
+                authors_list.append(author_name)
+
+            author_str = ", ".join(authors_list)
+
+            if not self.find_book(isbn):
+                self.books.append(Book(title, author_str, isbn))
+                self.save_books()
+                return f"{title} is added."
+            else:
+                return "The book is already added."
+
+        except httpx.HTTPStatusError:
+            return "The book can not found."
+
+        except httpx.RequestError:
+            return "Connection Error."
+
     def remove_book(self, isbn):
         book_to_remove = self.find_book(isbn)
         if book_to_remove:

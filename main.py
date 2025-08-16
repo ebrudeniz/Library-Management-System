@@ -17,11 +17,8 @@ def main():
             title = input("Book name: ")
             author = input("Author: ")
             isbn = input("ISBN: ")
-            new_book = Book(title, author, isbn)
-            if library.add_book(new_book):
-                print(f"'{title}' added succesfully.")
-            else:
-                print(f"Warning! The book with ISBN {isbn} is already added..")
+            result = library.add_book_by_isbn(isbn)
+            print(result)
 
         elif choice == 2:
             isbn = input("Enter the ISBN number of book: ")

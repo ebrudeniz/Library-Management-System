@@ -50,3 +50,17 @@ def test_save_and_load(library):
     new_library = Library(data_file='test_library.json')
     assert len(new_library.books) == 1
     assert new_library.books[0].title == "The Hobbit"
+
+def test_add_book_by_isbn_success(library):
+    isbn = "978-0743273565"
+    result = library.add_book_by_isbn(isbn)
+    assert "is added" in result
+    assert len(library.books) == 1
+    assert library.books[0].title == "The Great Gatsby"
+
+def test_add_book_by_isbn_duplicate(library):
+    isbn = "978-0743273565"
+    library.add_book_by_isbn(isbn)
+    result = library.add_book_by_isbn(isbn)
+    assert "The book is already added" in result
+    assert len(library.books) == 1
